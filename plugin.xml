@@ -1,0 +1,30 @@
+<plugin name='mongeez' version='0.2.3' grailsVersion='2.0.1 &gt; *'>
+  <author>David M. Carr</author>
+  <authorEmail>david@carrclan.us</authorEmail>
+  <title>Mongeez Plugin</title>
+  <description>A plugin that integrates the Mongeez change management system for MongoDB into Grails.</description>
+  <documentation>http://davidmc24.bitbucket.org/grails-mongeez</documentation>
+  <type>MongeezGrailsPlugin</type>
+  <resources>
+    <resource>spring.resources</resource>
+    <resource>grails.mongeez.MongeezController</resource>
+    <resource>grails.mongeez.MongeezService</resource>
+  </resources>
+  <repositories>
+    <repository name='grailsCentral' url='http://plugins.grails.org' />
+    <repository name='http://repo.grails.org/grails/plugins' url='http://repo.grails.org/grails/plugins/' />
+    <repository name='http://repo.grails.org/grails/core' url='http://repo.grails.org/grails/core/' />
+    <repository name='grailsCore' url='http://svn.codehaus.org/grails/trunk/grails-plugins' />
+    <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
+  </repositories>
+  <dependencies>
+    <compile>
+      <dependency group='org.mongeez' name='mongeez' version='0.9.4' />
+      <dependency group='org.mongodb' name='mongo-java-driver' version='2.11.2' />
+      <dependency group='org.reflections' name='reflections' version='0.9.8' />
+    </compile>
+  </dependencies>
+  <plugins />
+  <runtimePluginRequirements />
+  <behavior />
+</plugin>
