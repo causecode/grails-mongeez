@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package grails.plugin.mongeez
+package grails.mongeez
 
 import org.mongeez.reader.ChangeSetFileProvider
 import org.springframework.core.io.Resource

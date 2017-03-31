@@ -24,8 +24,8 @@ buildscript {
     }
 }
 
-version "0.1"
-group "cc.mongeez"
+version "0.2.4"
+group "org.grails"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
