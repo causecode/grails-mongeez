@@ -11,12 +11,18 @@ How to write JavaScript changeset logs : [Click here ](https://github.com/mongee
 
 ## How it works
  * First add a dependency for the plugin in build.gradle
-   ```
+
+```
+#!groovy
+
+
       dependencies {
       ...
               compile "org.grails:grails-mongeez:0.2.4"
 }
 ```
+
+
    
    
  * Create a directory 'grails-app/migrations' and place all your migrations here in JavaScript format.
@@ -25,7 +31,10 @@ How to write JavaScript changeset logs : [Click here ](https://github.com/mongee
  * Resources with the changeset logs inside migrations get executed.
 
 
-```groovy
+
+```
+#!groovy
+
 sourceSets {
     main {
         output.dir("$buildDir/resources/main/migrations", builtBy: 'createMigrationDirectory')
@@ -45,7 +54,9 @@ task copyMigrations(type: Copy) {
     into 'build/resources/main/migrations/'
 }
 ```
-In above code segment, `sourceSets` tells the gradle about migration folder which is created after the execution of the task ` createMigrationDirectory` and it depends on `copyMigrations` task which copies all the migration resources from your project directory `grails-app/migrations` to `build/resources/main/migrations/` location. Now migration resources available on classpath and mongeez-0.2.4 plugin uses `org.reflections.Reflections` library which scans for resources in the classpath and returns `.js` resources of `migrations`.
+
+
+In above code segment, `sourceSets` tells the gradle about migration folder which is created after the execution of the task ` createMigrationDirectory` and it depends on `copyMigrations` task which copies all the migration resources from your project directory `grails-app/migrations` to `build/resources/main/migrations/` location. Now migration resources available on classpath and grails-mongeez-0.2.4 plugin uses `org.reflections.Reflections` library which scans for resources in the classpath and returns `.js` resources of `migrations`.
 
 ## Ported By
 
