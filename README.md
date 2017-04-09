@@ -1,62 +1,38 @@
 # Grails MongoDB Database Migration Plugin
+Latest Version (0.2.4)
 
 ## Overview 
 
-This MongoDB database migration plugin helps to manage database changes while developing the grails 3.x applications and MongoDB as database. This plugin uses the [mongeez](https://github.com/mongeez/mongeez) library and change sets written in JavaScript. Change sets can be written in .xml or .js
-extension files.
-How to write JavaScript changeset logs : [Click here ](https://github.com/mongeez/mongeez/wiki/JavaScript-Change-Log-Format)
+This MongoDB database migration plugin helps to manage database changes while developing Grails 3.2.x Applications with MongoDB.
+This plugin uses the [Mongeez](https://github.com/mongeez/mongeez) library and change sets are written in JavaScript and XML.
 
-## Version
- Grails 3.2.0
+[How to write changelogs](https://github.com/mongeez/mongeez/wiki/How-to-use-mongeez)
 
-## How it works
+
+## Installation
  * First add a dependency for the plugin in build.gradle
 
 ```
-#!groovy
-
-
-      dependencies {
-      ...
-              compile "org.grails:grails-mongeez:0.2.4"
-}
-```
-
-
-   
-   
- * Create a directory 'grails-app/migrations' and place all your migrations here in JavaScript format.
- * Add below code segment in build.gradle of your project.
- * Run app using `grails run-app` or `grails war` 
- * Resources with the changeset logs inside migrations get executed.
-
-
-
-```
-#!groovy
-
-sourceSets {
-    main {
-        output.dir("$buildDir/resources/main/migrations", builtBy: 'createMigrationDirectory')
-    }
-}
-task createMigrationDirectory {
-    doFirst {
-        File migrationFilePathInstance = new File("$buildDir/resources/main", "migrations")
-        if (!migrationFilePathInstance.exists()) {
-            migrationFilePathInstance.mkdir()
+    buildscript {
+        dependencies {
+            ...
+            classpath "com.causecode.plugins:grails-mongeez:0.2.4"
         }
     }
-    dependsOn 'copyMigrations'
-}
-task copyMigrations(type: Copy) {
-    from 'grails-app/migrations/'
-    into 'build/resources/main/migrations/'
-}
+
+    apply plugin:'grails-mongeez'
 ```
 
 
-In above code segment, `sourceSets` tells the gradle about migration folder which is created after the execution of the task ` createMigrationDirectory` and it depends on `copyMigrations` task which copies all the migration resources from your project directory `grails-app/migrations` to `build/resources/main/migrations/` location. Now migration resources available on classpath and grails-mongeez-0.2.4 plugin uses `org.reflections.Reflections` library which scans for resources in the classpath and returns `.js` resources of `migrations`.
+ * Create a directory `migrations` under `grails-app` and place all your migrations here in JavaScript or XML files.
+ 
+ * For logging, add `grails.mongeez` package to your logger configuration. Example:
+
+```
+logger('grails.mongeez', DEBUG, ['STDOUT'], false)
+```
+
+`Note: This plugin is yet not tested with Grails 3.x and 3.1.x Apps but it should work fine for them as well.`
 
 ## Ported By
 
@@ -64,4 +40,5 @@ In above code segment, `sourceSets` tells the gradle about migration folder whic
 
 ## Credits
 
-David M. Carr, Commerce Technologies  [Click here](https://grails.org/plugin/mongeez)
+David M. Carr, Commerce Technologies
+[Grails 2.x Plugin](https://grails.org/plugin/mongeez)

@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package grails.mongeez
 
+import groovy.util.logging.Slf4j
 import org.mongeez.reader.ChangeSetFileProvider
 import org.springframework.core.io.Resource
 import org.reflections.Reflections
@@ -23,12 +23,18 @@ import org.reflections.scanners.ResourcesScanner
 import java.util.regex.Pattern
 import org.springframework.core.io.ClassPathResource
 
+@Slf4j
 class ReflectionsChangeSetFileProvider implements ChangeSetFileProvider {
+
     List<Resource> getChangeSetFiles() {
         // TODO Consider using pre-scanned metadata, at least when packaged as a war
         Reflections reflections = new Reflections('migrations', new ResourcesScanner())
-        def migrationResourcePaths = reflections.getResources(Pattern.compile('.*(\\.js|\\.xml)'))
-        def migrationResources = migrationResourcePaths.sort().collect{new ClassPathResource(it)}
+        Set<String> migrationResourcePaths = reflections.getResources(Pattern.compile('.*(\\.js|\\.xml)'))
+
+        List<ClassPathResource> migrationResources = migrationResourcePaths.sort().collect { new ClassPathResource(it) }
+
+        log.debug "[Grails Mongeez] - Found total ${migrationResources.size()} migration files."
+
         return migrationResources
     }
 }
