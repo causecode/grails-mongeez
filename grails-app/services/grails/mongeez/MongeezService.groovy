@@ -64,7 +64,7 @@ class MongeezService {
         // TODO: get a single way to determine the true order of existing executions... finer grained date
         def sort = new BasicDBObject([date: 1, resourcePath: 1])
         def changeSetExecutions = dbColl.find(query).sort((DBObject)sort).toArray()
-        def dateFormatter = DateFormatUtils.ISO_8601_EXTENDED_DATETIME_TIME_ZONE_FORMAT
+        def dateFormatter = DateFormatUtils.ISO_DATE_TIME_ZONE_FORMAT
         def datePattern = dateFormatter.getPattern()
         def dateParser = new SimpleDateFormat(datePattern)
         changeSetExecutions.each { execution ->

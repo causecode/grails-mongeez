@@ -11,7 +11,7 @@ import org.gradle.api.tasks.Copy
 
 /**
  * A Custom task for Copying the `grails-app/migrations` directory to resources.
- * 
+ *
  * @author Nikhil Sharma
  * @since 0.2.4
  */

@@ -31,6 +31,9 @@ class MongeezGrailsPlugin extends Plugin {
     def title = "mongeez" // Headline display name of the plugin
     def author = "David M. Carr"
     def authorEmail = "david@carrclan.us"
+    def developers = [[name: 'Vishesh Duggar', email: 'vishesh@causecode.com'],
+                      [name: 'Nikhil Sharma', email: 'nikhil.sharma@causecode.com'],
+                      [name: 'Shivam Pandey', email: 'shivam.pandey@causecode.com']]
     def description = 'A plugin that integrates the Mongeez change management system for MongoDB into Grails.'
     // URL to the plugin's documentation
     def documentation = "http://grails.org/plugin/mongeez"

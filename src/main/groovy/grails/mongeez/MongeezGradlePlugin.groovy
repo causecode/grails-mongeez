@@ -14,7 +14,7 @@ import org.gradle.api.Task
 /**
  * This Plugin's Gradle Plugin Descriptor file. It configures a custom copy task for copying migrations
  * to resources.
- * 
+ *
  * @author Nikhil Sharma
  * @since 0.2.4
  */
@@ -41,5 +41,3 @@ class MongeezGradlePlugin implements Plugin<Project> {
         }
     }
 }
-
-
