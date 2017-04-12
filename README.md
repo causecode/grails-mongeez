@@ -36,7 +36,7 @@ logger('grails.mongeez', DEBUG, ['STDOUT'], false)
 
 ## Ported By
 
-[CauseCode Technologies](https://causecode.com/)
+[CauseCode Technologies Pvt Ltd](https://causecode.com/)
 
 ## Credits
 

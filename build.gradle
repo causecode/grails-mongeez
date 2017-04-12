@@ -1,9 +1,17 @@
 /*
  * Copyright (c) 2017, CauseCode Technologies Pvt Ltd, India.
- * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or
- * without modification, are not permitted.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 buildscript {
@@ -62,46 +70,14 @@ dependencies {
     testCompile "org.grails:grails-plugin-testing"
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-
-            artifactId "grails-mongeez"
-
-            pom.withXml {
-                def pomNode = asNode()
-                // version-less dependencies are handled with dependencyManagement
-                pomNode.dependencies.dependency.findAll {
-                    it.version.text().isEmpty()
-                }.each {
-                    it.replaceNode {}
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            credentials {
-                username mavenPublishUser
-                password mavenPublishPassword
-            }
-            url "http://maven-upload.causecode.com"
-        }
-    }
-}
-
 grailsPublish {
     // TODO: Provide values here
-    user = 'user'
-    key = 'key'
-    githubSlug = 'foo/bar'
+    githubSlug = 'causecode/grails-mongeez'
+	repo = 'os'
     license {
         name = 'Apache-2.0'
     }
-    title = "My Plugin"
-    desc = "Full plugin description"
-    developers = [johndoe:"John Doe"]
-    portalUser = ""
-    portalPassword = ""
+    title = "Grails Mongeez"
+    desc = "Grails Mongeez plugin for Grails 3"
+    developers = [causecode:"CauseCode Technologies Pvt Ltd"]
 }
