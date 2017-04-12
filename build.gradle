@@ -1,6 +1,15 @@
+/*
+ * Copyright (c) 2017, CauseCode Technologies Pvt Ltd, India.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or
+ * without modification, are not permitted.
+ */
+
 buildscript {
     repositories {
         mavenLocal()
+        mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
@@ -8,16 +17,18 @@ buildscript {
     }
 }
 
-version "0.1"
-group "cc.mongeez"
+version "0.2.4"
+group "com.causecode.plugins"
 
 apply plugin:"eclipse"
 apply plugin:"idea"
 apply plugin:"org.grails.grails-plugin"
 apply plugin:"org.grails.grails-plugin-publish"
+apply plugin:"org.grails.grails-gsp"
 
 repositories {
     mavenLocal()
+    mavenCentral()
     maven { url "https://repo.grails.org/grails/core" }
 }
 
@@ -29,15 +40,57 @@ dependencyManagement {
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-logging"
-    compile "org.springframework.boot:spring-boot-autoconfigure"
-    compile "org.grails:grails-core"
-    console "org.grails:grails-console"
-    profile "org.grails.profiles:plugin"
+    // For Gradle Plugin
+    compile gradleApi()
+
+    provided "org.springframework.boot:spring-boot-starter-logging"
+    provided "org.springframework.boot:spring-boot-autoconfigure"
+
+    provided "org.grails:grails-core"
+    provided "org.grails:grails-web-boot"
+    provided "org.grails:grails-plugin-gsp"
+    provided "org.grails.plugins:mongodb:6.0.9"
+
+    compile "org.mongeez:mongeez:0.9.6"
+    compile "org.reflections:reflections:0.9.9-RC1"
+
+    profile "org.grails.profiles:web-plugin"
+
     provided "org.grails:grails-plugin-services"
     provided "org.grails:grails-plugin-domain-class"
+
     testCompile "org.grails:grails-plugin-testing"
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifactId "grails-mongeez"
+
+            pom.withXml {
+                def pomNode = asNode()
+                // version-less dependencies are handled with dependencyManagement
+                pomNode.dependencies.dependency.findAll {
+                    it.version.text().isEmpty()
+                }.each {
+                    it.replaceNode {}
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username mavenPublishUser
+                password mavenPublishPassword
+            }
+            url "http://maven-upload.causecode.com"
+        }
+    }
+}
+
 grailsPublish {
     // TODO: Provide values here
     user = 'user'
@@ -50,5 +103,5 @@ grailsPublish {
     desc = "Full plugin description"
     developers = [johndoe:"John Doe"]
     portalUser = ""
-    portalPassword = ""    
+    portalPassword = ""
 }

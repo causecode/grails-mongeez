@@ -1,7 +1,7 @@
 grails:
-    profile: plugin
+    profile: web-plugin
     codegen:
-        defaultPackage: cc.mongeez
+        defaultPackage: grails.mongeez
     spring:
         transactionManagement:
             proxies: false
