@@ -19,9 +19,17 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
+        maven {
+            credentials {
+                username mavenUser
+                password mavenPassword
+            }
+            url "https://nexus.causecode.com/repository/maven-releases/"
+        }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
+        classpath "com.causecode.plugins:gradle-code-quality:1.0.0"
     }
 }
 
@@ -33,11 +41,19 @@ apply plugin:"idea"
 apply plugin:"org.grails.grails-plugin"
 apply plugin:"org.grails.grails-plugin-publish"
 apply plugin:"org.grails.grails-gsp"
+apply plugin: 'gradle-code-quality'
 
 repositories {
     mavenLocal()
     mavenCentral()
     maven { url "https://repo.grails.org/grails/core" }
+    maven {
+        credentials {
+            username mavenUser
+            password mavenPassword
+        }
+        url "https://nexus.causecode.com/repository/maven-releases/"
+    }
 }
 
 dependencyManagement {
@@ -81,6 +97,35 @@ dependencies {
     provided "org.grails:grails-plugin-domain-class"
 
     testCompile "org.grails:grails-test-mixins:3.3.0"
+}
+
+project.publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from project.components.java
+
+            artifactId "nucleus"
+
+            pom.withXml {
+                def pomNode = asNode()
+                // version-less dependencies are handled with dependencyManagement
+                pomNode.dependencies.dependency.findAll {
+                    it.version.text().isEmpty()
+                }.each {
+                    it.replaceNode {}
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username mavenPublishUser
+                password mavenPublishPassword
+            }
+            url "https://nexus.causecode.com/repositories/maven-releases"
+        }
+    }
 }
 
 grailsPublish {
