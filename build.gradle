@@ -25,7 +25,7 @@ buildscript {
     }
 }
 
-version "0.2.4"
+version "0.2.5"
 group "com.causecode.plugins"
 
 apply plugin:"eclipse"
@@ -57,17 +57,18 @@ dependencies {
     provided "org.grails:grails-core"
     provided "org.grails:grails-web-boot"
     provided "org.grails:grails-plugin-gsp"
-    provided "org.grails.plugins:mongodb:6.0.9"
+    provided "org.grails.plugins:mongodb"
 
     compile "org.mongeez:mongeez:0.9.6"
-    compile "org.reflections:reflections:0.9.9-RC1"
+    compile "org.reflections:reflections:0.9.10"
 
     profile "org.grails.profiles:web-plugin"
 
     provided "org.grails:grails-plugin-services"
     provided "org.grails:grails-plugin-domain-class"
 
-    testCompile "org.grails:grails-plugin-testing"
+    testCompile "org.grails:grails-test-mixins:3.3.0"
+    testCompile "org.grails:grails-web-testing-support"
 }
 
 grailsPublish {
@@ -80,4 +81,8 @@ grailsPublish {
     title = "Grails Mongeez"
     desc = "Grails Mongeez plugin for Grails 3"
     developers = [causecode:"CauseCode Technologies Pvt Ltd"]
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = gradleWrapperVersion
 }

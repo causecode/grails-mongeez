@@ -1,9 +1,9 @@
 # Grails MongoDB Database Migration Plugin
-Latest Version (0.2.4)
+Latest Version (0.2.5)
 
 ## Overview 
 
-This MongoDB database migration plugin helps to manage database changes while developing Grails 3.2.x Applications with MongoDB.
+This MongoDB database migration plugin helps to manage database changes while developing Grails 3.3.x and 3.2.x Applications with MongoDB.
 This plugin uses the [Mongeez](https://github.com/mongeez/mongeez) library and change sets are written in JavaScript and XML.
 
 [How to write changelogs](https://github.com/mongeez/mongeez/wiki/How-to-use-mongeez)
@@ -12,11 +12,12 @@ This plugin uses the [Mongeez](https://github.com/mongeez/mongeez) library and c
 ## Installation
  * First add a dependency for the plugin in build.gradle
 
+Grails App >= 3.3.x use `v0.2.5` and <=3.2.x use `v0.2.4`
 ```
     buildscript {
         dependencies {
             ...
-            classpath "com.causecode.plugins:grails-mongeez:0.2.4"
+            classpath "com.causecode.plugins:grails-mongeez:$version"
         }
     }
 
@@ -32,7 +33,6 @@ This plugin uses the [Mongeez](https://github.com/mongeez/mongeez) library and c
 logger('grails.mongeez', DEBUG, ['STDOUT'], false)
 ```
 
-`Note: This plugin is yet not tested with Grails 3.x and 3.1.x Apps but it should work fine for them as well.`
 
 ## Ported By
 
