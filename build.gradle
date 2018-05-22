@@ -33,7 +33,7 @@ buildscript {
     }
 }
 
-version "3.3.0"
+version "1.0.0"
 group "com.causecode.plugins"
 
 apply plugin:"eclipse"

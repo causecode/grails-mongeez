@@ -1,5 +1,5 @@
 # Grails MongoDB Database Migration Plugin
-Latest Version (3.3.0)
+Latest Version (1.0.0)
 
 ## Overview 
 
@@ -12,7 +12,7 @@ This plugin uses the [Mongeez](https://github.com/mongeez/mongeez) library and c
 ## Installation
  * First add a dependency for the plugin in build.gradle
 
-Grails App >= 3.3.x use `v0.2.5` and <=3.2.x use `v0.2.4`
+Grails App >= 3.3.x use `v1.0.0` and <=3.2.x use `v0.2.4`
 ```
     buildscript {
         dependencies {
