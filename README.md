@@ -1,5 +1,5 @@
 # Grails MongoDB Database Migration Plugin
-Latest Version (0.2.5)
+Latest Version (3.3.0)
 
 ## Overview 
 
