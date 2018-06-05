@@ -48,9 +48,14 @@ class MongeezGrailsPlugin extends Plugin {
         log.debug "Configuring Grails Mongeez Plugin..."
 
         String mongoBeanName = 'mongo'
-        String databaseName = grailsApplication.config.grails.mongodb.databaseName
-        String username = grailsApplication.config.grails.mongodb.username
-        String password = grailsApplication.config.grails.mongodb.password
+        Map<String, Object> mongodbConfigurations = grailsApplication.config.grails.mongeezCreds ?:
+                grailsApplication.config.grails.mongodb
+
+        String databaseName = mongodbConfigurations.databaseName
+        String username = mongodbConfigurations.username
+        String password = mongodbConfigurations.password
+        String authenticationDatabase = mongodbConfigurations.authenticationDatabase ?:
+                mongodbConfigurations.databaseName
 
         boolean updateOnStart = grailsApplication.config.grails.mongeez?.updateOnStart ?: true
 
@@ -69,6 +74,7 @@ class MongeezGrailsPlugin extends Plugin {
                 dbName = databaseName
                 userName = username
                 passWord = password
+                authDb = authenticationDatabase
                 changeSetFileProvider = ref('changeSetFileProvider')
             }
         }

@@ -33,7 +33,7 @@ buildscript {
     }
 }
 
-version "0.2.4"
+version "0.2.5"
 group "com.causecode.plugins"
 
 apply plugin:"eclipse"
@@ -76,7 +76,7 @@ dependencies {
     provided "org.grails.plugins:mongodb:6.0.9"
     provided "javax.servlet:servlet-api:2.5"
 
-    compile "org.mongeez:mongeez:0.9.6"
+    compile "org.mongeez:mongeez:0.9.7-RC1"
     compile "org.reflections:reflections:0.9.9-RC1"
     profile "org.grails.profiles:web-plugin"
 
