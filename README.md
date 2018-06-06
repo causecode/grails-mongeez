@@ -1,5 +1,5 @@
 # Grails MongoDB Database Migration Plugin
-Latest Version (0.2.5)
+Latest Version (0.3.0)
 
 ## Overview
 
@@ -38,11 +38,12 @@ logger('grails.mongeez', DEBUG, ['STDOUT'], false)
 
 Mongeez internally calls db.eval() method to execute queries.
 
-“If authorization is enabled, you must have access to
+> If authorization is enabled, you must have access to
 all actions on all resources in order to run eval. Providing such access is not recommended, but if your organization
 requires a user to run eval, create a role that grants anyAction on anyResource.
-Do not assign this role to any other user.”
-https://docs.mongodb.com/manual/reference/method/db.eval/#access-control
+Do not assign this role to any other user.
+
+reference: https://docs.mongodb.com/manual/reference/method/db.eval/#access-control
 
 **Use these commands to create your user and role:**
 ```
@@ -81,8 +82,11 @@ grails:
         authenticationDatabase: "auth_test"
 ```
 
-Note: If you do not have separate user to run these migrations, then you don't need to specify `mongoCreds`.
-The configuration is picked from `mongodb` section. See `MongeezGrailsPlugin` class for details.
+Note:
+1. If you do not have separate user to run these migrations, then you don't need to specify `mongeezCreds`.
+The configuration is picked from `mongodb` section. See  [MongeezGrailsPlugin](https://github.com/causecode/grails-mongeez/blob/master/src/main/groovy/grails/mongeez/MongeezGrailsPlugin.groovy) class for details.
+2. If you have specified `mongeezCreds`, `mongodb` configurations will be ignored and migrations will be run by the
+credentials provided in `mongeezCreds`.
 
 ## Ported By
 
