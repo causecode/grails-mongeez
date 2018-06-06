@@ -1,6 +1,6 @@
 # ChangeLog
 
-## [1.0.1] - [UNRELEASED]
+## [1.1.0] - [UNRELEASED]
 
 ### Added
 1. Functionality to authenticate against a protected database.

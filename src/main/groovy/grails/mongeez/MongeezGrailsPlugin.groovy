@@ -49,14 +49,14 @@ class MongeezGrailsPlugin extends Plugin {
         log.debug "Configuring Grails Mongeez Plugin..."
 
         String mongoBeanName = 'mongo'
-        Map<String, Object> mongodbConfigurations = grailsApplication.config.grails.mongeezCreds ?:
+        Map<String, Object> mongodbConfigurationMap = grailsApplication.config.grails.mongeezCreds ?:
                 grailsApplication.config.grails.mongodb
 
-        String databaseName = mongodbConfigurations.databaseName
-        String username = mongodbConfigurations.username
-        String password = mongodbConfigurations.password
-        String authenticationDatabase = mongodbConfigurations.authenticationDatabase ?:
-                mongodbConfigurations.databaseName
+        String databaseName = mongodbConfigurationMap.databaseName
+        String username = mongodbConfigurationMap.username
+        String password = mongodbConfigurationMap.password
+        String authenticationDatabase = mongodbConfigurationMap.authenticationDatabase ?:
+                mongodbConfigurationMap.databaseName
 
         boolean updateOnStart = grailsApplication.config.grails.mongeez?.updateOnStart ?: true
 
