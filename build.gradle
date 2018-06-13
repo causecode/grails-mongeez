@@ -110,7 +110,7 @@ project.publishing {
                 username mavenPublishUser
                 password mavenPublishPassword
             }
-            url "https://nexus.causecode.com/repositories/maven-releases"
+            url "https://nexus.causecode.com/repository/maven-releases/"
         }
     }
 }
