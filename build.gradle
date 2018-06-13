@@ -91,7 +91,7 @@ project.publishing {
         mavenJava(MavenPublication) {
             from project.components.java
 
-            artifactId "nucleus"
+            artifactId "grails-mongeez"
 
             pom.withXml {
                 def pomNode = asNode()
