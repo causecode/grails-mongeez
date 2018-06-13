@@ -19,6 +19,7 @@ import grails.core.GrailsApplication
 import grails.plugins.Plugin
 import groovy.util.logging.Slf4j
 import org.mongeez.MongeezRunner
+import org.mongeez.MongoAuth
 
 @Slf4j
 class MongeezGrailsPlugin extends Plugin {
@@ -48,9 +49,14 @@ class MongeezGrailsPlugin extends Plugin {
         log.debug "Configuring Grails Mongeez Plugin..."
 
         String mongoBeanName = 'mongo'
-        String databaseName = grailsApplication.config.grails.mongodb.databaseName
-        String username = grailsApplication.config.grails.mongodb.username
-        String password = grailsApplication.config.grails.mongodb.password
+        Map<String, Object> mongodbConfigurationMap = grailsApplication.config.grails.mongeezCreds ?:
+                grailsApplication.config.grails.mongodb
+
+        String databaseName = mongodbConfigurationMap.databaseName
+        String username = mongodbConfigurationMap.username
+        String password = mongodbConfigurationMap.password
+        String authenticationDatabase = mongodbConfigurationMap.authenticationDatabase ?:
+                mongodbConfigurationMap.databaseName
 
         boolean updateOnStart = grailsApplication.config.grails.mongeez?.updateOnStart ?: true
 
@@ -69,6 +75,7 @@ class MongeezGrailsPlugin extends Plugin {
                 dbName = databaseName
                 userName = username
                 passWord = password
+                authDb = authenticationDatabase
                 changeSetFileProvider = ref('changeSetFileProvider')
             }
         }

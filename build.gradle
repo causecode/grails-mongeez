@@ -17,7 +17,7 @@ buildscript {
     }
 }
 
-version "1.0.0"
+version "1.1.0"
 group "com.causecode.plugins"
 
 apply plugin:"eclipse"
@@ -65,7 +65,7 @@ dependencies {
 
     provided "org.grails.plugins:mongodb"
 
-    compile "org.mongeez:mongeez:0.9.6"
+    compile "org.mongeez:mongeez:0.9.7-RC1"
     compile "org.reflections:reflections:0.9.10"
 
     profile "org.grails.profiles:web-plugin"
