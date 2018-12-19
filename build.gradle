@@ -3,17 +3,9 @@ buildscript {
         mavenLocal()
         mavenCentral()
         maven { url "https://repo.grails.org/grails/core" }
-        maven {
-            credentials {
-                username mavenUser
-                password mavenPassword
-            }
-            url "https://nexus.causecode.com/repository/maven-releases/"
-        }
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        classpath "com.causecode.plugins:gradle-code-quality:1.0.0"
     }
 }
 
@@ -23,21 +15,15 @@ group "com.causecode.plugins"
 apply plugin:"eclipse"
 apply plugin:"idea"
 apply plugin:"org.grails.grails-plugin"
-apply plugin:"org.grails.grails-plugin-publish"
 apply plugin:"org.grails.grails-gsp"
-apply plugin: 'gradle-code-quality'
+apply plugin: 'maven-publish'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 repositories {
     mavenLocal()
     mavenCentral()
     maven { url "https://repo.grails.org/grails/core" }
-    maven {
-        credentials {
-            username mavenUser
-            password mavenPassword
-        }
-        url "https://nexus.causecode.com/repository/maven-releases/"
-    }
 }
 
 dependencyManagement {
@@ -75,13 +61,74 @@ dependencies {
     testCompile "org.grails:grails-test-mixins:3.3.0"
 }
 
-project.publishing {
+artifacts {
+    archives jar
+
+    archives javadocJar
+    archives sourcesJar
+}
+
+signing {
+    useGpgCmd()
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+
+            if (!project.hasProperty('ossrhUsername') || !project.hasProperty('ossrhPassword')) {
+                return
+            }
+
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'grails-mongeez'
+                packaging 'jar'
+                description 'This Plugin provides ability to run migrations on Grails-MongoDB app.'
+                url 'https://github.com/causecode/grails-file-uploader'
+
+                scm {
+                    url 'scm:svn:https://github.com/causecode/grails-mongeez'
+                    connection 'scm:svn:https://github.com/causecode/grails-mongeez.git'
+                    developerConnection 'https://github.com:causecode/grails-mongeez.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'causecode'
+                        name 'CauseCode Technologies'
+                        email 'bootstrap@causecode.com'
+                    }
+                }
+            }
+        }
+    }
+}
+
+publishing {
     publications {
         mavenJava(MavenPublication) {
-            from project.components.java
+            from components.java
 
             artifactId "grails-mongeez"
-
             pom.withXml {
                 def pomNode = asNode()
                 // version-less dependencies are handled with dependencyManagement
@@ -93,27 +140,10 @@ project.publishing {
             }
         }
     }
-    repositories {
-        maven {
-            credentials {
-                username mavenPublishUser
-                password mavenPublishPassword
-            }
-            url "https://nexus.causecode.com/repository/maven-releases/"
-        }
-    }
 }
 
-grailsPublish {
-    // TODO: Provide values here
-    githubSlug = 'causecode/grails-mongeez'
-	repo = 'os'
-    license {
-        name = 'Apache-2.0'
-    }
-    title = "Grails Mongeez"
-    desc = "Grails Mongeez plugin for Grails 3"
-    developers = [causecode:"CauseCode Technologies Pvt Ltd"]
+jar {
+    exclude('**/UrlMappings*')
 }
 
 task wrapper(type: Wrapper) {
